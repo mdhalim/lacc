@@ -552,6 +552,10 @@ static int expand_line(ExpandStack *scope, TokenArray *list)
     const struct token *endptr;
     TokenArray *args, expn;
 
+    if (!tok_cmp(array_get(list, 0), ident__Pragma)) {
+        n = expand_Pragma(list);
+    }
+
     for (n = 0, i = 0; i < array_len(list); ++i) {
         t = array_get(list, i);
         if (!t.is_expandable || t.disable_expand) {
@@ -591,13 +595,29 @@ static int expand_line(ExpandStack *scope, TokenArray *list)
     return n;
 }
 
+static int expand_Pragma(TokenArray *list)
+{
+    array_empty(list);
+    return 0;
+}
+
 int expand(TokenArray *list)
 {
     int n;
-    ExpandStack stack = get_expand_stack();
+    ExpandStack stack;
 
-    n = expand_line(&stack, list);
-    release_expand_stack(stack);
+    if (array_len(list) > 0) {
+        if (!tok_cmp(array_get(list, 0), ident__Pragma)) {
+            n = expand_Pragma(list);
+        } else {
+            stack = get_expand_stack();
+            n = expand_line(&stack, list);
+            release_expand_stack(stack);
+        }
+    } else {
+        n = 0;
+    }
+
     return n;
 }
 

@@ -388,6 +388,9 @@ static void preprocess_line(int n)
             } else {
                 line_buffer = NULL;
             }
+        } else if (!tok_cmp(t, ident__Pragma)) {
+            i = read_complete_line(&line, t, 1);
+            preprocess_directive(&line);
         } else {
             assert(in_active_block());
             i = read_complete_line(&line, t, 0);

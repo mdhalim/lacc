@@ -4,6 +4,18 @@
 #include <lacc/array.h>
 #include <lacc/token.h>
 
+extern struct token
+    ident__include,
+    ident__defined,
+    ident__define,
+    ident__ifndef,
+    ident__ifdef,
+    ident__undef,
+    ident__elif,
+    ident__endif,
+    ident__error,
+    ident__Pragma;
+
 typedef array_of(struct token) TokenArray;
 
 /* Get empty token array, possibly already allocated with capacity. */

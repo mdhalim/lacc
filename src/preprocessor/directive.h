@@ -4,17 +4,6 @@
 #include "macro.h"
 #include <lacc/token.h>
 
-extern struct token
-    ident__include,
-    ident__defined,
-    ident__define,
-    ident__ifndef,
-    ident__ifdef,
-    ident__undef,
-    ident__elif,
-    ident__endif,
-    ident__error;
-
 /*
  * Preprocess a line starting with a '#' directive. Borrows ownership of
  * input. Assume input is END terminated.
